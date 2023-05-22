@@ -45,38 +45,15 @@ class WeatherForecastComponent extends CBitrixComponent
 			],
 		])->fetch();
 
-
 		$params = [		
-            'NAME' => 'Иркутск',
-            'CITY_FIAS_ID' => '8eeed222-72e7-47c3-ab3a-9a553c31cf72',
-            'LONGITUDE' => '104.28066',
-            'LATITUDE' => '52.286387',
+            'NAME' => \COption::GetOptionString("mcart.weather", "city_name_default"),
+            'CITY_FIAS_ID' => \COption::GetOptionString("mcart.weather", "city_fias_id_default"),
+            'LONGITUDE' => \COption::GetOptionString("mcart.weather", "city_long_default"),
+            'LATITUDE' => \COption::GetOptionString("mcart.weather", "city_lat_default"),
         ];
 
 		$weather_city =  Weather::getWeatherCity($params);
-		
-		foreach ($weather_city as $key=>$elem) {
-			if ($elem['UF_PRECIPITATION'] == 0) {
-				$weather_city[$key]['UF_PRECIPITATION'] = '-';
-			} else {
-				$weather_city[$key]['UF_PRECIPITATION'] = Helper::getUserEnum([
-					'FIELD_NAME' => 'UF_PRECIPITATION',
-					'ENTITY_ID' => "HLBLOCK_" . $hlblock['ID'],
-					'ID' => 1,
-					'RETURN' => $elem['UF_PRECIPITATION']
-				]);
-			}
-		}
-
-		foreach ($weather_city as $key=>$elem) {			
-			$weather_city[$key]['UF_CLOUDINESS'] = Helper::getUserEnum([
-					'FIELD_NAME' => 'UF_CLOUDINESS',
-					'ENTITY_ID' => "HLBLOCK_" . $hlblock['ID'],
-					'ID' => 1,
-					'RETURN' => $elem['UF_CLOUDINESS']
-			]);
-		}
-
+		$this->arResult['CITY_NAME'] = $params['NAME'];
 		$this->arResult['CITY'] = $weather_city;
 		
 		$this->IncludeComponentTemplate();

@@ -126,10 +126,17 @@ class Weather
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
 		p2f('fillHLBlockWeatherByCity - start CURL');
 		p2f($url);
 		$res = curl_exec($curl);
 		p2f('fillHLBlockWeatherByCity - end CURL');
+
+		if($res === false) {
+			CitiesTable::delete($city_id);
+			ShowError(curl_error($curl));
+			return;
+		}
 
 		$info = json_decode($res, true); // Результат запроса в массиве.
 
@@ -163,6 +170,9 @@ class Weather
 		
 		])->fetch()) {
 			p2f('getWeatherCity - CashCity');
+			CitiesTable::update($weatherCity['ID'], [
+				'LAST_USE' => new Type\DateTime(),
+			]);
 			return self::getWeatherByID($weatherCity['ID']);
 		} else {
 			$result = CitiesTable::add([
@@ -217,6 +227,22 @@ class Weather
         while($query = $listWeather->fetch()){
 			p2f('getWeatherByID - IN while start');
             $query['UF_DIRECTION_WIND'] = self::translateDirection($query['UF_DIRECTION_WIND']);
+            $query['UF_CLOUDINESS'] = Helper::getUserEnum([
+				'FIELD_NAME' => 'UF_CLOUDINESS',
+				'ENTITY_ID' => "HLBLOCK_" . $hlblock['ID'],
+				'ID' => 1,
+				'RETURN' => $query['UF_CLOUDINESS']
+			]);
+			if ($query['UF_PRECIPITATION'] == 0) {
+				$query['UF_PRECIPITATION'] = '-';
+			} else {
+				$query['UF_PRECIPITATION'] = Helper::getUserEnum([
+					'FIELD_NAME' => 'UF_PRECIPITATION',
+					'ENTITY_ID' => "HLBLOCK_" . $hlblock['ID'],
+					'ID' => 1,
+					'RETURN' => $query['UF_PRECIPITATION']
+				]);
+			}
             $result[] = $query;
 			p2f('getWeatherByID - IN while end');
         };

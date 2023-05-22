@@ -5,33 +5,21 @@ $("#address").suggestions({
     type: "ADDRESS",
     /* Вызывается, когда пользователь выбирает одну из подсказок */
     onSelect: function(suggestion) {
-        BX.ajax.runComponentAction('mcart:weather.forecast', 'getCityWeather', {
-            mode: 'ajax', //это означает, что мы хотим вызывать действие из class.php
+  
+        $.ajax({
+            type: "POST",
+            url: '/local/modules/mcart.weather/ajax.php',
             data: {
-                city_info: JSON.stringify(suggestion) //данные будут автоматически замаплены на параметры метода 
+                'city_fias_id': suggestion.data.city_fias_id,
+                'geo_lat': suggestion.data.geo_lat,
+                'geo_lon': suggestion.data.geo_lon,
+                'city': suggestion.data.city,
             },
-            analyticsLabel: {
-                viewMode: 'grid',
-                filterState: 'closed'	
-            }	
-        }).then(function (response) {
-            console.log(response);
-            /**
-            {
-                "status": "success", 
-                "data": "Hi Hero!", 
-                "errors": []
-            }
-            **/			
-        }, function (response) {
-            //сюда будут приходить все ответы, у которых status !== 'success'
-            console.log(response);
-            /**
-            {
-                "status": "error", 
-                "errors": [...]
-            }
-            **/				
-        });(suggestion);
-    }
+            success: function (answer) {
+                let forecast = $('.weather_foreast');
+                forecast.html(answer);
+ 
+            },
+        });
+    }	
 });

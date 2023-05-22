@@ -48,13 +48,6 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
-	),
-	Array(
-		"ntcn 3", 
-		"/ntcn-3/", 
-		Array(), 
-		Array(), 
-		"" 
 	)
 );
 ?>

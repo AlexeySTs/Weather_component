@@ -1,7 +1,7 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Тест 2");
-?>Text here....<?$APPLICATION->IncludeComponent(
+?><?$APPLICATION->IncludeComponent(
 	"mcart:weather.forecast", 
 	".default", 
 	array(
