@@ -41,6 +41,20 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Тест 2", 
+		"/test-2/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"ntcn 3", 
+		"/ntcn-3/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>

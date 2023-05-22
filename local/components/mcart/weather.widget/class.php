@@ -1,6 +1,8 @@
 <?
 use Bitrix\Highloadblock\HighloadblockTable;
 use Bitrix\Main\Loader;
+CJSCore::Init(array('ajax'));
+define("PUBLIC_AJAX_MODE", true);
 
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
@@ -42,6 +44,9 @@ class WeatherWidgetComponent extends CBitrixComponent
 
 	}
 	
+	public function test($info) {
+		p2f($info);
+	}
 
 	public function executeComponent ()
 	{
@@ -81,6 +86,16 @@ class WeatherWidgetComponent extends CBitrixComponent
 				'RETURN' => $this->arResult['UF_CLOUDINESS']
 			]);
 			
+			if(!empty($this->arResult['UF_PRECIPITATION'])) {
+
+				$this->arResult['UF_PRECIPITATION'] = getUserEnum([
+					'FIELD_NAME' => 'UF_PRECIPITATION',
+					'ENTITY_ID' => "HLBLOCK_" . $hlblock['ID'],
+					'ID' => 1,
+					'RETURN' => $this->arResult['UF_PRECIPITATION']
+				]);
+			}
+
 			if(!empty($this->arResult['UF_PRECIPITATION'])) {
 
 				$this->arResult['UF_PRECIPITATION'] = getUserEnum([
