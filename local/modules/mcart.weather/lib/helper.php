@@ -1,6 +1,6 @@
 <?php
-namespace Mcart\Weather;
 
+namespace Mcart\Weather;
 
 class Helper 
 {

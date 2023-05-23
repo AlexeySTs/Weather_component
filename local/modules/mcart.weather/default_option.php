@@ -5,5 +5,4 @@ $mcart_weather_default_option = array(
     "city_long_default"  =>  "37.620393",
     "city_lat_default"  =>  "55.75396",
     "city_name_default"  =>  "Москва",
-    );
-?>
+);
