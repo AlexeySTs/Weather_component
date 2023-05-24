@@ -6,7 +6,7 @@ use Bitrix\Main\Loader;
 use Mcart\Weather\Weather;
 use Mcart\Weather\Tables\CitiesTable;
 
-class AgentWeather
+class Agent
 {
     static public function updateInfoWeather()
     {

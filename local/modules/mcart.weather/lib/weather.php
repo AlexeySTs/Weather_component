@@ -7,6 +7,9 @@ use Bitrix\Main\Loader;
 use Mcart\Weather\Tables\CitiesTable;
 use Mcart\Weather\Helper;
 use Bitrix\Main\Type;
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
 
 if (!Loader::includeModule('highloadblock')) {
 	ShowError('Error not include highloadblock module');
@@ -84,6 +87,32 @@ class Weather
 				return ($elem);
 			}
 		}
+	}
+
+	static public function getWeatherForAjax($params)
+	{
+		$weather_city =  self::getWeatherCity($params);
+
+		$result = [];
+		$result['ROWS'] = [];
+		foreach ($weather_city as $elem) {
+			$result['ROWS'][] = [
+				'data' => $elem,
+			];
+		};
+
+		$result['COLUMS'] = [
+			['id' => 'UF_START_PERIOD', 'name' => Loc::getMessage("START_PERIOD"), 'sort' => 'DATE', 'default' => true],
+			['id' => 'UF_END_PERIOD', 'name' => Loc::getMessage("END_PERIOD"), 'sort' => 'DATE', 'default' => true],
+			['id' => 'UF_CLOUDINESS', 'name' => Loc::getMessage("CLOUDINESS"), 'sort' => 'ID', 'default' => true],
+			['id' => 'UF_DIRECTION_WIND', 'name' => Loc::getMessage("WIND"), 'sort' => 'DATE', 'default' => true],
+			['id' => 'UF_HUMIDITY', 'name' => Loc::getMessage("PRESURE"), 'sort' => 'PAYER_INN', 'default' => true],
+			['id' => 'UF_PRECIPITATION', 'name' => Loc::getMessage("PRECIPITATION"), 'sort' => 'PAYER_NAME', 'default' => true],
+			['id' => 'UF_PRESURE', 'name' => Loc::getMessage("HUMIDITY"), 'sort' => 'IS_SPEND', 'default' => true],
+			['id' => 'UF_TEMPERATURE', 'name' => Loc::getMessage("TEMPERATURE"), 'sort' => 'IS_SPEND', 'default' => true],
+			['id' => 'UF_WIND_SPEED', 'name' => Loc::getMessage("WIND_SPEED_CHAR"), 'sort' => 'IS_SPEND', 'default' => true],
+		];
+		return $result;
 	}
 
 	// Удаление данных из ХЛ блока по ID города

@@ -55,7 +55,7 @@ class mcart_weather extends CModule
 
         ModuleManager::registerModule($this->MODULE_ID);
 
-        \CAgent::AddAgent("\\Mcart\\Weather\\AgentWeather::updateInfoWeather();", "mcart.weather", "N", 3 * 3600, "", "Y");
+        \CAgent::AddAgent("\\Mcart\\Weather\\Agent::updateInfoWeather();", "mcart.weather", "N", 3 * 3600, "", "Y");
 
         $this->InstallFiles();
         $this->InstallDB();

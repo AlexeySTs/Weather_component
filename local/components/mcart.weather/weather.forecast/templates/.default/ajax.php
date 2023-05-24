@@ -30,7 +30,7 @@ $APPLICATION->ShowAjaxHead();
         echo 'Недостаточно данных';
         die();
     }
-
+    p2f($request['city']);
     echo '<h1>' . $request['city'] . '</h1>';
 
     $weather_city =  Weather::getWeatherForAjax([
@@ -39,6 +39,8 @@ $APPLICATION->ShowAjaxHead();
         'LONGITUDE' => $request['geo_lon'],
         'LATITUDE' => $request['geo_lat'],
     ]);
+
+    p2f($weather_city);
 
     $APPLICATION->IncludeComponent(
         'bitrix:main.ui.grid',
