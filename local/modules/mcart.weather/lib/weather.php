@@ -229,7 +229,7 @@ class Weather
 		]);
 
 		while ($query = $listWeather->fetch()) { // Получение погоды, изменения данных для показа, и заполнение в массив
-			p2f('getWeatherByID - IN while start');
+
 			$query['UF_DIRECTION_WIND'] = self::translateDirection($query['UF_DIRECTION_WIND']);
 			$query['UF_CLOUDINESS'] = Helper::getUserEnum([
 				'FIELD_NAME' => 'UF_CLOUDINESS',

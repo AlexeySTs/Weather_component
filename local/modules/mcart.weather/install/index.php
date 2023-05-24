@@ -62,8 +62,6 @@ class mcart_weather extends CModule
         $this->installHlBlockWeather();
     }
 
-
-
     public function installDB()
     {
         if (Loader::includeModule($this->MODULE_ID)) {
@@ -88,7 +86,7 @@ class mcart_weather extends CModule
         $this->uninstallDB();
         $this->uninstallHlBlockWeather();
         $this->UnInstallFiles();
-        CAgent::RemoveAgent('\\Mcart\\Weather\\AgentWeather::updateInfoWeather();',"mcart.weather" );
+        CAgent::RemoveAgent('\\Mcart\\Weather\\AgentWeather::updateInfoWeather();', "mcart.weather");
         UnRegisterModule($this->MODULE_ID);
     }
 
@@ -141,9 +139,8 @@ class mcart_weather extends CModule
             'NAME' => 'WeatherMcart',
             'TABLE_NAME' => 'weather_mcart',
         ));
-        p2f($result->getErrorMessages());
         if (!$result->isSuccess()) {
-            p2f($APPLICATION->ThrowException($result->getErrorMessages()));
+            $APPLICATION->ThrowException($result->getErrorMessages());
         }
         $hl_id = $result->getId();
 
@@ -272,7 +269,6 @@ class mcart_weather extends CModule
 
 
         );
-
 
         // Перебор массива со списком полей и добавление в пользовательские поля
         $arSavedFieldsRes = array();

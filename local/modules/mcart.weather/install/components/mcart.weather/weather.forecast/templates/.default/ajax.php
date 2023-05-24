@@ -11,8 +11,6 @@ use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
-
-
 if (!Loader::includeModule('mcart.weather')) {
     ShowError('Error not include mcart.weather module');
     return;

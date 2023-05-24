@@ -8,7 +8,7 @@ $("#address").suggestions({
 
         $.ajax({
             type: "POST",
-            url: '/local/modules/mcart.weather/ajax.php',
+            url: '/local/components/mcart.weather/weather.forecast/templates/.default/ajax.php',
             data: {
                 'city_fias_id': suggestion.data.city_fias_id,
                 'geo_lat': suggestion.data.geo_lat,
